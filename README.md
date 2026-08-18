@@ -47,6 +47,17 @@ Every action traced via Agent Observability (OpenTelemetry → Cloud Trace).
 
 Simulated counterparty (manufacturer/trading-partner) is a plain REST/Cloud Function endpoint mimicking an EPCIS/VRS-style system intentionally *not* another AI agent, matching real-world DSCSA infrastructure where most trading partners run traditional systems.
 
+## Reliability Safeguards
+
+Prompt instructions alone don't stop an agent from ignoring a rule — every safeguard below is enforced outside the model, at the infrastructure or workflow layer:
+
+- **Scoped permissions, not polite instructions —** each agent's write access is restricted at the IAM level (e.g. Verification's identity has no Firestore write grant at all), not just told "don't write" in its prompt
+- **Persistent case state —** multi-day investigations read/write constraints to Firestore/Memory Bank each turn, instead of relying on the model to remember them in context
+- **Verified, not just claimed, completion —** actions like "product verified" or "notification drafted" are independently confirmed with a readback, not trusted at face value
+- **Human approval gate before filing —** the Reporting Agent can only produce a draft notification; a human must approve it before it's finalized, and the model has no path to bypass that gate
+
+Full detail in [`AnalyzeLabPRD.md`](AnalyzeLabPRD.md), Section 6.5.
+
 ## Tech Stack
 
 - **Agent framework:** Google ADK (Python)
