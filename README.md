@@ -1,10 +1,10 @@
 # AnalyzeLab
 
-A governed multi-agent AI fleet that verifies pharmaceutical products, investigates suspect/counterfeit drugs, and produces a regulator-grade audit trail — built on Google ADK and the Gemini Enterprise Agent Platform (GEAP) for the **Fortified Enterprise Fleet** track.
+A governed multi-agent AI fleet that verifies pharmaceutical products, investigates suspect/counterfeit drugs, and produces a regulator-grade audit trail built on Google ADK and the Gemini Enterprise Agent Platform (GEAP) for the **Fortified Enterprise Fleet** track.
 
 ## Problem
 
-Counterfeit and diverted drugs are actively entering the legitimate U.S. pharmaceutical supply chain. Under the Drug Supply Chain Security Act (DSCSA), trading partners are legally required to verify products electronically and investigate suspect items within a strict window — but in practice, verification is mechanical (does this serial number match?) with no reasoning layer, and failures are often caught only after a shipment has already arrived. AnalyzeLab adds the missing reasoning-and-governance layer on top of existing verification infrastructure.
+Counterfeit and diverted drugs are actively entering the legitimate U.S. pharmaceutical supply chain. Under the Drug Supply Chain Security Act (DSCSA), trading partners are legally required to verify products electronically and investigate suspect items within a strict window but in practice, verification is mechanical (does this serial number match?) with no reasoning layer, and failures are often caught only after a shipment has already arrived. AnalyzeLab adds the missing reasoning-and-governance layer on top of existing verification infrastructure.
 
 Full problem statement and architecture: see [`docs/PRD.md`](docs/PRD.md).
 
@@ -45,7 +45,7 @@ All agents cataloged in Agent Registry.
 Every action traced via Agent Observability (OpenTelemetry → Cloud Trace).
 ```
 
-Simulated counterparty (manufacturer/trading-partner) is a plain REST/Cloud Function endpoint mimicking an EPCIS/VRS-style system — intentionally *not* another AI agent, matching real-world DSCSA infrastructure where most trading partners run traditional systems.
+Simulated counterparty (manufacturer/trading-partner) is a plain REST/Cloud Function endpoint mimicking an EPCIS/VRS-style system intentionally *not* another AI agent, matching real-world DSCSA infrastructure where most trading partners run traditional systems.
 
 ## Tech Stack
 
