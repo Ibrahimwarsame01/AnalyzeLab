@@ -73,11 +73,22 @@ AnalyzeLab is a governed fleet of AI agents, built on Google ADK and deployed on
 - **A2A protocol** between AnalyzeLab's own agents
 - A **plain REST/Cloud Function endpoint** simulates the counterparty trading partner's EPCIS/VRS system — intentionally NOT another AI agent, matching real-world DSCSA infrastructure
 
-### 6.5 Frontend
+
+### 6.5 Reliability Safeguards
+
+| Failure mode | Safeguard | Enforcement layer |
+|---|---|---|
+| Agent ignores its stated permission boundary (e.g. Verification "writing" to the registry despite instructions not to) | Scoped IAM permissions per agent identity — Verification's service account has no write grant on Firestore at all | Agent Identity (infrastructure, not prompt) |
+| Investigation loses track of case constraints across a multi-day, multi-turn investigation ("state drift") | Case constraints and prior findings are written to Firestore/Memory Bank as structured records the agent re-reads each turn, not held only in conversation context | Memory Bank + Firestore |
+| Agent reports success without the underlying action actually having happened ("plausible completion") | Every state-changing action requires a separate, independent readback that confirms the change actually occurred — e.g. Orchestrator re-queries the registry after Verification claims "verified," rather than trusting the claim | Agent Observability (verified, not just logged) |
+| Agent re-runs the same failed/inconclusive check from scratch instead of recognizing it already tried | Failed and inconclusive verification attempts are logged as first-class records in Firestore; Investigation Agent checks prior attempts before re-evaluating a case | Firestore case history |
+| Agent autonomously finalizes a high-stakes action (filing the FDA notification) without human sign-off | Reporting Agent can only produce a *draft*; a human approval step is required at the workflow layer before anything is marked final — the model cannot bypass this by being "confident" | Human-in-the-loop approval gate (workflow layer, not model layer) |
+
+### 6.6 Frontend
 - Lightweight dashboard (React or plain HTML/JS) showing: incoming products, verification status, flagged investigations, generated reports, and the audit trail/reasoning-chain view
 - Hosted on Firebase Hosting or Cloud Run, calling the backend API
 
-### 6.6 Model
+### 6.7 Model
 - **Gemini 3.5 Flash** as default for all agents
 - **Gemini Pro** reserved only if Investigation Agent reasoning needs deeper analysis
 
