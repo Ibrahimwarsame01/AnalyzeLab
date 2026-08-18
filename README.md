@@ -6,7 +6,7 @@ A governed multi-agent AI fleet that verifies pharmaceutical products, investiga
 
 Counterfeit and diverted drugs are actively entering the legitimate U.S. pharmaceutical supply chain. Under the Drug Supply Chain Security Act (DSCSA), trading partners are legally required to verify products electronically and investigate suspect items within a strict window but in practice, verification is mechanical (does this serial number match?) with no reasoning layer, and failures are often caught only after a shipment has already arrived. AnalyzeLab adds the missing reasoning-and-governance layer on top of existing verification infrastructure.
 
-Full problem statement and architecture: see [`docs/PRD.md`](docs/PRD.md).
+Full problem statement and architecture: see [`AnalyzeLabPRD.md`](AnalyzeLabPRD.md).
 
 ## Live Demo
 
